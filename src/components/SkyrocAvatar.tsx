@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 
-import soybeanAvatar from '@/assets/imgs/soybean.jpg';
+import skyrocAvatar from '@/assets/imgs/skyroc.jpg';
 
-const SoybeanAvatar = ({ className, ...props }: React.ComponentProps<'div'>) => {
+const SkyrocAvatar = ({ className, ...props }: React.ComponentProps<'div'>) => {
   return (
     <div
       {...props}
@@ -10,10 +10,11 @@ const SoybeanAvatar = ({ className, ...props }: React.ComponentProps<'div'>) => 
     >
       <img
         className="size-full"
-        src={soybeanAvatar}
+        src={skyrocAvatar}
       />
     </div>
   );
 };
 
-export default SoybeanAvatar;
+export default SkyrocAvatar;
+

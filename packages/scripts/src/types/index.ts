@@ -4,7 +4,7 @@ export interface CliOption {
   /**
    * Options of generate changelog
    *
-   * @link https://github.com/soybeanjs/changelog
+   * @link https://github.com/skyroc/changelog
    */
   changelogOptions: Partial<ChangelogOption>;
   /**

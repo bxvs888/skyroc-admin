@@ -105,7 +105,7 @@ export const BaseChildrenRoutes = [
           localIcon: 'logo',
           order: 1,
           title: 'document_project',
-          url: 'https://react-docs.soybeanjs.cn'
+          url: 'https://skyroc-admin.com'
         },
         id: 'document_project',
         lazy: () => import('@/pages/_builtin/iframe-page').then(convert),
@@ -113,7 +113,7 @@ export const BaseChildrenRoutes = [
       },
       {
         handle: {
-          href: 'https://react-docs.soybeanjs.cn',
+          href: 'https://skyroc-admin.com',
           i18nKey: 'route.document_project-link',
           localIcon: 'logo',
           order: 2,

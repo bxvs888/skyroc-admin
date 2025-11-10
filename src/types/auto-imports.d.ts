@@ -78,7 +78,7 @@ declare global {
   const PinToggler: typeof import('../components/PinToggler')['default']
   const Route: typeof import('react-router-dom')['Route']
   const Routes: typeof import('react-router-dom')['Routes']
-  const SoybeanAvatar: typeof import('../components/SoybeanAvatar')['default']
+  const SkyrocAvatar: typeof import('../components/SkyrocAvatar')['default']
   const SvgIcon: typeof import('../components/SvgIcon')['default']
   const SystemLogo: typeof import('../components/SystemLogo')['default']
   const TypingAnimation: typeof import('../components/TypingAnimation')['TypingAnimation']

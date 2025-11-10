@@ -1,7 +1,7 @@
 import { useArray } from '@sa/hooks';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import SoybeanAvatar from '@/components/SoybeanAvatar';
+import SkyrocAvatar from '@/components/SkyrocAvatar';
 
 const variants = {
   exit: { opacity: 0, transition: { duration: 0.3 }, x: 200 },
@@ -128,7 +128,7 @@ const ProjectNews = () => {
                 ]}
               >
                 <AList.Item.Meta
-                  avatar={<SoybeanAvatar className="size-48px!" />}
+                  avatar={<SkyrocAvatar className="size-48px!" />}
                   description={item.time}
                   title={item.content}
                 />

@@ -1,4 +1,4 @@
-import avatar from '@/assets/imgs/soybean.jpg';
+import avatar from '@/assets/imgs/skyroc.jpg';
 import { selectUserInfo } from '@/features/auth/authStore';
 
 interface StatisticData {

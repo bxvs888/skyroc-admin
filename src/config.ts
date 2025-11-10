@@ -49,7 +49,7 @@ class GlobalConfig {
   private _noop = () => {};
 
   /** - 水印文本 */
-  private _watermarkText = 'Soybean';
+  private _watermarkText = 'Skyroc';
 
   /** - 水印配置 */
   private _watermarkConfig = {

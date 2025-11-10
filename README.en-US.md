@@ -1,6 +1,6 @@
 <div align="center">
  <img src="./public/favicon.svg" width="160" />
- <h1>React SoybeanAdmin</h1>
+ <h1>React SkyrocAdmin</h1>
   <span><a href="./README.en-US.md">English</a> | 中文</span>
 </div>
 
@@ -9,7 +9,7 @@
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 > [!NOTE]
-> If you find `React SoybeanAdmin` helpful or like our project, please give us a ⭐️ on GitHub. Your support motivates us to keep improving and adding new features! Thank you for your support!
+> If you find `React SkyrocAdmin` helpful or like our project, please give us a ⭐️ on GitHub. Your support motivates us to keep improving and adding new features! Thank you for your support!
 
 ## Special Thanks
 
@@ -17,7 +17,7 @@ This project is based on the outstanding open-source project [Soybean Admin](htt
 
 ## Introduction
 
-[`React SoybeanAdmin`](https://github.com/mufeng889/react-soybean-admin) is a fresh and elegant admin panel template built on the React19 stack. It adopts the latest frontend technologies, including:
+[`React SkyrocAdmin`](https://github.com/Ohh-889/skyroc-admin) is a fresh and elegant admin panel template built on the React19 stack. It adopts the latest frontend technologies, including:
 
 - 🚀 React 19 + ReactRouter V7 + Redux/toolkit
 - 🎨 Ant Design + UnoCSS
@@ -40,7 +40,7 @@ This project is based on the outstanding open-source project [Soybean Admin](htt
 - 🚀 Advanced routing features: Extends React-Router V7 API ，Provide convention-based file routing similar to Next.js, while also allowing custom reusable routes..
 - ⚡️ CLI tools: Built-in tools for Git commits, file deletions, releases, and more.
 
-Whether you're learning the latest frontend technologies or developing enterprise-grade admin panels, React SoybeanAdmin is your ideal choice.
+Whether you're learning the latest frontend technologies or developing enterprise-grade admin panels, React SkyrocAdmin is your ideal choice.
 
 ## Branches
 
@@ -54,14 +54,14 @@ Both branches will continue to receive bug fixes. If you need the older version,
 ### React Version
 
 - **React19 Version:**
-  - [Preview](https://github.com/mufeng889/react-soybean-admin/)
-  - [Faster Access in China](https://react-soybean-admin.pages.dev/)
-  - [GitHub Repository](https://github.com/mufeng889/react-soybean-admin)
+  - [Preview](https://skyroc-admin.com/)
+  - [Faster Access in China](https://skyroc-admin.pages.dev/)
+  - [GitHub Repository](https://github.com/Ohh-889/skyroc-admin)
   - [Gitee Repository](https://gitee.com/sjgk_dl/react-admin)
 
 #### Documentation
 
-- [Docs](https://react-soybean-docs.ohh-889.com/index-cn?theme=dark)
+- [Docs](https://skyroc-admin.com/guide)
 
 ### Vue Versions
 
@@ -85,7 +85,7 @@ Both branches will continue to receive bug fixes. If you need the older version,
 
 ## Ant Design-Themed Comprehensive Documentation
 
-- [Docs](https://react-soybean-docs.ohh-889.com/index-cn?theme=dark)
+- [Docs](https://skyroc-admin.com/guide)
 ![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/docs-home.jpg)
 
 ## Demo Screenshots
@@ -116,7 +116,7 @@ Ensure your environment meets the following requirements:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/soybeanjs/soybean-admin.git
+git clone https://github.com/Ohh-889/skyroc-admin.git
 ```
 
 ### Install Dependencies
@@ -141,7 +141,7 @@ pnpm build
 
 ## Contribution
 
-We warmly welcome and appreciate all forms of contributions. If you have any ideas or suggestions, please share them via [pull requests](https://github.com/mufeng889/react-soybean-admin/pulls) or GitHub [issues](https://github.com/mufeng889/react-soybean-admin/issues/new).
+We warmly welcome and appreciate all forms of contributions. If you have any ideas or suggestions, please share them via [pull requests](https://github.com/Ohh-889/skyroc-admin/pulls) or GitHub [issues](https://github.com/Ohh-889/skyroc-admin/issues/new).
 
 ## Git Commit Guidelines
 
@@ -165,13 +165,13 @@ For the best experience, use the latest version of Chrome.
 
 Thanks to the following contributors. If you want to contribute, please refer to [Contribution](#contribution).
 
-<a href="https://github.com/mufeng889/react-soybean-admin/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=mufeng889/react-soybean-admin" />
+<a href="https://github.com/Ohh-889/skyroc-admin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Ohh-889/skyroc-admin" />
 </a>
 
 ## Community
 
-`React Soybean` is a completely free and open-source project, aiming to make developing medium-to-large admin systems easier. We also provide QQ and WeChat groups for user discussions. Feel free to ask questions in the group.
+`React SkyrocAdmin` is a completely free and open-source project, aiming to make developing medium-to-large admin systems easier. We also provide QQ and WeChat groups for user discussions. Feel free to ask questions in the group.
 
   <div>
    <p>QQ Group</p>
@@ -191,5 +191,5 @@ Thanks to the following contributors. If you want to contribute, please refer to
 
 ## License
 
-This project is licensed under [MIT © 2021 Soybean](./LICENSE). It is intended for learning and reference only. For commercial use, please retain the original author's copyright information. The author does not guarantee or take responsibility for any risks associated with using the software.
+This project is licensed under [MIT © 2021 Skyroc](./LICENSE). It is intended for learning and reference only. For commercial use, please retain the original author's copyright information. The author does not guarantee or take responsibility for any risks associated with using the software.
 
