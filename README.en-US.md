@@ -61,7 +61,7 @@ Both branches will continue to receive bug fixes. If you need the older version,
 
 #### Documentation
 
-- [Docs](https://skyroc-admin.com/guide)
+- [Docs](https://admin-docs.skyroc.me)
 
 ### Vue Versions
 
@@ -85,7 +85,7 @@ Both branches will continue to receive bug fixes. If you need the older version,
 
 ## Ant Design-Themed Comprehensive Documentation
 
-- [Docs](https://skyroc-admin.com/guide)
+- [Docs](https://admin-docs.skyroc.me)
 ![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/docs-home.jpg)
 
 ## Demo Screenshots

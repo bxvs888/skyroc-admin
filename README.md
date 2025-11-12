@@ -61,7 +61,7 @@
 
 #### 文档
 
-- [地址](https://skyroc-admin.com/guide)
+- [地址](https://admin-docs.skyroc.me)
 
 ### Vue版本
 
@@ -86,7 +86,7 @@
 
 ## 符合Ant Design风格的保姆级文档
 
-- [地址](https://react-soybean-docs.ohh-889.com/index-cn?theme=dark)
+- [地址](https://admin-docs.skyroc.me)
 ![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/docs-home.jpg)
 
 ## 示例图片
