@@ -1,99 +1,9 @@
 /**
- * Namespace Api
+ * Namespace Api.SystemManage
  *
- * All backend api type
+ * Backend api module: "systemManage"
  */
 declare namespace Api {
-  namespace Common {
-    /** common params of paginating */
-    interface PaginatingCommonParams {
-      /** current page number */
-      current: number;
-      /** page size */
-      size: number;
-      /** total count */
-      total: number;
-    }
-
-    /** common params of paginating query list data */
-    interface PaginatingQueryRecord<T = any> extends PaginatingCommonParams {
-      records: T[];
-    }
-
-    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
-
-    /**
-     * enable status
-     *
-     * - "1": enabled
-     * - "2": disabled
-     */
-    type EnableStatus = '1' | '2';
-
-    /** common record */
-    type CommonRecord<T = any> = {
-      /** record creator */
-      createBy: string;
-      /** record create time */
-      createTime: string;
-      /** record id */
-      id: number;
-      /** record status */
-      status: EnableStatus | null;
-      /** record updater */
-      updateBy: string;
-      /** record update time */
-      updateTime: string;
-    } & T;
-  }
-
-  /**
-   * namespace Auth
-   *
-   * backend api module: "auth"
-   */
-  namespace Auth {
-    interface LoginToken {
-      refreshToken: string;
-      token: string;
-    }
-
-    interface UserInfo {
-      buttons: string[];
-      roles: string[];
-      userId: string;
-      userName: string;
-    }
-
-    type Info = {
-      token: LoginToken['token'];
-      userInfo: UserInfo;
-    };
-  }
-
-  /**
-   * namespace Route
-   *
-   * backend api module: "route"
-   */
-  namespace Route {
-    type ElegantConstRoute = import('@soybean-react/vite-plugin-react-router').ElegantConstRoute;
-
-    interface MenuRoute extends ElegantConstRoute {
-      id: string;
-    }
-
-    interface UserRoute {
-      home: import('@soybean-react/vite-plugin-react-router').LastLevelRouteKey;
-      routes: string[];
-    }
-  }
-
-  /**
-   * namespace SystemManage
-   *
-   * backend api module: "systemManage"
-   */
   namespace SystemManage {
     type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
 
@@ -121,10 +31,10 @@ declare namespace Api {
     /**
      * user gender
      *
-     * - "1": "male"
-     * - "2": "female"
+     * - "1": male
+     * - "2": female
      */
-    type UserGender = '1' | '2';
+    type UserGender = import('../enums').UserGenderValue;
 
     /** user */
     type User = Common.CommonRecord<{
@@ -157,7 +67,7 @@ declare namespace Api {
      * - "1": directory
      * - "2": menu
      */
-    type MenuType = '1' | '2';
+    type MenuType = import('../enums').MenuTypeValue;
 
     type MenuButton = {
       /**
@@ -176,7 +86,7 @@ declare namespace Api {
      * - "1": iconify icon
      * - "2": local icon
      */
-    type IconType = '1' | '2';
+    type IconType = import('../enums').IconTypeValue;
 
     type MenuPropsOfRoute = Pick<
       import('@soybean-react/vite-plugin-react-router').RouteMeta,
