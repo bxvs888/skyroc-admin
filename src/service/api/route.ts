@@ -1,13 +1,14 @@
 import { request } from '../request';
+import { ROUTE_URLS } from '../urls';
 
 /** get constant routes */
 export function fetchGetConstantRoutes() {
-  return request<Api.Route.MenuRoute[]>({ url: '/route/getConstantRoutes' });
+  return request<Api.Route.MenuRoute[]>({ url: ROUTE_URLS.GET_CONSTANT_ROUTES });
 }
 
 /** get user routes */
 export function fetchGetUserRoutes() {
-  return request<Api.Route.UserRoute>({ url: '/route/getReactUserRoutes' });
+  return request<Api.Route.UserRoute>({ url: ROUTE_URLS.GET_USER_ROUTES });
 }
 
 /**
@@ -16,5 +17,5 @@ export function fetchGetUserRoutes() {
  * @param routeName route name
  */
 export function fetchIsRouteExist(routeName: string) {
-  return request<boolean>({ params: { routeName }, url: '/route/isRouteExist' });
+  return request<boolean>({ params: { routeName }, url: ROUTE_URLS.IS_ROUTE_EXIST });
 }

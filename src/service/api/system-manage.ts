@@ -1,11 +1,12 @@
 import { request } from '../request';
+import { SYSTEM_MANAGE_URLS } from '../urls';
 
 /** get role list */
 export function fetchGetRoleList(params?: Api.SystemManage.RoleSearchParams) {
   return request<Api.SystemManage.RoleList>({
     method: 'get',
     params,
-    url: '/systemManage/getRoleList'
+    url: SYSTEM_MANAGE_URLS.GET_ROLE_LIST
   });
 }
 
@@ -17,7 +18,7 @@ export function fetchGetRoleList(params?: Api.SystemManage.RoleSearchParams) {
 export function fetchGetAllRoles() {
   return request<Api.SystemManage.AllRole[]>({
     method: 'get',
-    url: '/systemManage/getAllRoles'
+    url: SYSTEM_MANAGE_URLS.GET_ALL_ROLES
   });
 }
 
@@ -26,7 +27,7 @@ export function fetchGetUserList(params?: Api.SystemManage.UserSearchParams) {
   return request<Api.SystemManage.UserList>({
     method: 'get',
     params,
-    url: '/systemManage/getUserList'
+    url: SYSTEM_MANAGE_URLS.GET_USER_LIST
   });
 }
 
@@ -34,7 +35,7 @@ export function fetchGetUserList(params?: Api.SystemManage.UserSearchParams) {
 export function fetchGetMenuList() {
   return request<Api.SystemManage.MenuList>({
     method: 'get',
-    url: '/systemManage/getMenuList/v2'
+    url: SYSTEM_MANAGE_URLS.GET_MENU_LIST
   });
 }
 
@@ -42,7 +43,7 @@ export function fetchGetMenuList() {
 export function fetchGetAllPages() {
   return request<string[]>({
     method: 'get',
-    url: '/systemManage/getAllPages'
+    url: SYSTEM_MANAGE_URLS.GET_ALL_PAGES
   });
 }
 
@@ -50,6 +51,6 @@ export function fetchGetAllPages() {
 export function fetchGetMenuTree() {
   return request<Api.SystemManage.MenuTree[]>({
     method: 'get',
-    url: '/systemManage/getMenuTree'
+    url: SYSTEM_MANAGE_URLS.GET_MENU_TREE
   });
 }
