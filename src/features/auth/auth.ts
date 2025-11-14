@@ -55,44 +55,41 @@ export function useInitAuth() {
 
   const redirectUrl = searchParams.get('redirect');
 
-  async function toLogin({ password, userName }: Api.Auth.LoginParams, redirect = true) {
+  async function toLogin(params: Api.Auth.LoginParams, redirect = true) {
     if (loading) return;
 
     startLoading();
 
-    login(
-      { password, userName },
-      {
-        onSuccess: async data => {
-          localStg.set('token', data.token);
+    login(params, {
+      onSuccess: async data => {
+        localStg.set('token', data.token);
 
-          localStg.set('refreshToken', data.refreshToken);
+        localStg.set('refreshToken', data.refreshToken);
 
-          const { data: info, error } = await refetchUserInfo();
+        const { data: info, error } = await refetchUserInfo();
 
-          if (!error && info) {
-            localStg.set('userInfo', info);
+        if (!error && info) {
+          localStg.set('userInfo', info);
 
-            dispatch(setToken(data.token));
+          dispatch(setToken(data.token));
 
-            if (redirect) {
-              if (redirectUrl) {
-                replace(redirectUrl);
-              } else {
-                replace(globalConfig.homePath);
-              }
+          if (redirect) {
+            if (redirectUrl) {
+              replace(redirectUrl);
+            } else {
+              replace(globalConfig.homePath);
             }
-
-            window.$notification?.success({
-              description: t('page.login.common.welcomeBack', { userName: info.userName }),
-              message: t('page.login.common.loginSuccess')
-            });
-          } else {
-            endLoading();
           }
+
+          window.$notification?.success({
+            description: t('page.login.common.welcomeBack', { userName: info.userName }),
+            message: t('page.login.common.loginSuccess')
+          });
+        } else {
+          endLoading();
         }
       }
-    );
+    });
   }
 
   return {
