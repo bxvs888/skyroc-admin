@@ -63,9 +63,6 @@ export function useInitAuth() {
     login(
       { password, userName },
       {
-        onSettled: () => {
-          endLoading();
-        },
         onSuccess: async data => {
           localStg.set('token', data.token);
 
@@ -90,6 +87,8 @@ export function useInitAuth() {
               description: t('page.login.common.welcomeBack', { userName: info.userName }),
               message: t('page.login.common.loginSuccess')
             });
+          } else {
+            endLoading();
           }
         }
       }
