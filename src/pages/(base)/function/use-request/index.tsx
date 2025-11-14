@@ -1,7 +1,6 @@
-import { useRequest } from '@sa/hooks';
 import type { DescriptionsProps } from 'antd';
 
-import { fetchGetUserList } from '@/service/api';
+import { useUserList } from '@/service/hooks';
 
 const { Title } = ATypography;
 
@@ -24,11 +23,9 @@ function transformDataToItem<T extends string, U extends Values>(
 const Component = () => {
   const [current, setCurrent] = useState(1);
 
-  const { data, loading } = useRequest(fetchGetUserList, {
-    params: {
-      current,
-      size: 10
-    }
+  const { data, isLoading } = useUserList({
+    current,
+    size: 10
   });
 
   const items = data ? Object.entries(data.records[0]).map(transformDataToItem) : [];
@@ -53,7 +50,7 @@ const Component = () => {
       <div className="flex flex-col items-center gap-6">
         <AButton
           className="transition-transform hover:scale-105"
-          loading={loading}
+          loading={isLoading}
           type="primary"
           onClick={handleChange}
         >
@@ -62,18 +59,18 @@ const Component = () => {
 
         <div className="mx-auto max-w-2xl rounded-lg p-4 shadow-sm backdrop-blur-sm">
           <p className="text-center leading-relaxed">
-            项目的useRequest相较于阿里的ahooks的useRequest，依赖刷新进行了重写，多加了一个params参数，自动推导类型并且当其中一个参数发生变化时，会自动刷新请求，使用最新的参数。
+            使用 React Query 的 useUserList hook 来获取用户列表数据，当参数变化时会自动刷新请求。
           </p>
         </div>
 
         <div className="mt-4 w-full">
-          {loading && (
+          {isLoading && (
             <div className="flex items-center justify-center py-12">
               <ASpin size="large" />
             </div>
           )}
 
-          {!loading && items.length > 0 && (
+          {!isLoading && items.length > 0 && (
             <ADescriptions
               bordered
               className="overflow-hidden rounded-lg shadow-sm backdrop-blur-sm"
@@ -83,7 +80,7 @@ const Component = () => {
             />
           )}
 
-          {!loading && items.length === 0 && <AEmpty />}
+          {!isLoading && items.length === 0 && <AEmpty />}
         </div>
       </div>
     </ACard>

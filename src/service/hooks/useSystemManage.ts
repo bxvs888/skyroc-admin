@@ -34,7 +34,8 @@ export function useRoleList(params?: Api.SystemManage.RoleSearchParams) {
 export function useAllRoles() {
   return useQuery({
     queryFn: fetchGetAllRoles,
-    queryKey: QUERY_KEYS.SYSTEM_MANAGE.ALL_ROLES
+    queryKey: QUERY_KEYS.SYSTEM_MANAGE.ALL_ROLES,
+    staleTime: 0
   });
 }
 

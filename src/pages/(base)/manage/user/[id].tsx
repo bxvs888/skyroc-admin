@@ -49,11 +49,13 @@ const Component = () => {
 };
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const { data, error } = await fetchGetUserList();
-  if (error) return null;
-
-  const info = data.records.find(item => String(item.id) === params.id);
-  return info;
+  try {
+    const data = await fetchGetUserList();
+    const info = data.records.find(item => String(item.id) === params.id);
+    return info;
+  } catch {
+    return null;
+  }
 }
 
 export default Component;

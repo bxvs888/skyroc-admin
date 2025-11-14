@@ -1,10 +1,9 @@
-import { useRequest } from '@sa/hooks';
 import { Button, Drawer, Flex, Form, Input, Radio, Select } from 'antd';
 import type { FC } from 'react';
 
 import { enableStatusOptions, userGenderOptions } from '@/constants/business';
 import { useFormRules } from '@/features/form';
-import { fetchGetAllRoles } from '@/service/api';
+import { useAllRoles } from '@/service/hooks';
 
 interface OptionsProps {
   label: string;
@@ -28,9 +27,7 @@ function getOptions(item: Api.SystemManage.AllRole) {
 const UserOperateDrawer: FC<Page.OperateDrawerProps> = ({ form, handleSubmit, onClose, open, operateType }) => {
   const { t } = useTranslation();
 
-  const { data, run } = useRequest(fetchGetAllRoles, {
-    manual: true
-  });
+  const { data, refetch } = useAllRoles();
 
   const { defaultRequiredRule } = useFormRules();
 
@@ -43,7 +40,7 @@ const UserOperateDrawer: FC<Page.OperateDrawerProps> = ({ form, handleSubmit, on
 
   useUpdateEffect(() => {
     if (open) {
-      run();
+      refetch();
     }
   }, [open]);
 

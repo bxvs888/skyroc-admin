@@ -74,7 +74,7 @@ export function useTable<A extends AntDesign.TableApiFn>(
     immediate,
     isChangeURL,
     transformer: res => {
-      const { current = 1, records = [], size = 10, total: totalNum = 0 } = res.data || {};
+      const { current = 1, records = [], size = 10, total: totalNum = 0 } = res || {};
 
       const recordsWithIndex = records.map((item, index) => {
         return {

@@ -1,5 +1,5 @@
 import avatar from '@/assets/imgs/skyroc.jpg';
-import { selectUserInfo } from '@/features/auth/authStore';
+import { useUserInfo } from '@/service/hooks';
 
 interface StatisticData {
   id: number;
@@ -10,7 +10,7 @@ interface StatisticData {
 const HeaderBanner = () => {
   const { t } = useTranslation();
 
-  const userInfo = useAppSelector(selectUserInfo);
+  const { data: userInfo } = useUserInfo();
 
   const statisticData: StatisticData[] = [
     {
@@ -47,7 +47,7 @@ const HeaderBanner = () => {
               />
             </div>
             <div className="pl-12px">
-              <h3 className="text-18px font-semibold">{t('page.home.greeting', { userName: userInfo.userName })}</h3>
+              <h3 className="text-18px font-semibold">{t('page.home.greeting', { userName: userInfo?.userName })}</h3>
               <p className="text-#999 leading-30px">{t('page.home.weatherDesc')}</p>
             </div>
           </div>

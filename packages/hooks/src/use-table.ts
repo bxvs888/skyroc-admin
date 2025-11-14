@@ -90,21 +90,26 @@ export default function useHookTable<A extends ApiFn, T, C>(config: TableConfig<
   async function getData() {
     startLoading();
 
-    const formattedParams = formatSearchParams(searchParams.current);
+    try {
+      const formattedParams = formatSearchParams(searchParams.current);
 
-    if (isChangeURL) {
-      setSearchParams(formattedParams as URLSearchParamsInit, { replace: true });
+      if (isChangeURL) {
+        setSearchParams(formattedParams as URLSearchParamsInit, { replace: true });
+      }
+
+      const response = await apiFn(formattedParams);
+
+      const transformed = transformer(response as Awaited<ReturnType<A>>);
+
+      setData(transformed);
+
+      setEmpty(transformed.data.length === 0);
+
+      await config.onFetched?.(transformed);
+    } catch {
+      // Error is already handled by the error interceptor
+      setEmpty(true);
     }
-
-    const response = await apiFn(formattedParams);
-
-    const transformed = transformer(response as Awaited<ReturnType<A>>);
-
-    setData(transformed);
-
-    setEmpty(transformed.data.length === 0);
-
-    await config.onFetched?.(transformed);
 
     endLoading();
   }

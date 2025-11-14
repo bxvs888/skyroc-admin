@@ -1,35 +1,40 @@
 import { useLoading } from '@sa/hooks';
 
 import { globalConfig } from '@/config';
-import { getIsLogin, selectUserInfo } from '@/features/auth/authStore';
+import { getIsLogin } from '@/features/auth/authStore';
 import { usePreviousRoute, useRouter } from '@/features/router';
-import { fetchGetUserInfo, fetchLogin } from '@/service/api';
+import { useLogin, useUserInfo } from '@/service/hooks';
 import { localStg } from '@/utils/storage';
 
 import { useCacheTabs } from '../tab/tabHooks';
 
-import { resetAuth as resetAuthAction, setToken, setUserInfo } from './authStore';
+import { resetAuth as resetAuthAction, setToken } from './authStore';
 import { clearAuthStorage } from './shared';
 
+const { VITE_AUTH_ROUTE_MODE, VITE_STATIC_SUPER_ROLE } = import.meta.env;
+
 export function useAuth() {
-  const userInfo = useAppSelector(selectUserInfo);
+  const { data } = useUserInfo();
 
   const isLogin = useAppSelector(getIsLogin);
 
+  const isStaticSuper = VITE_AUTH_ROUTE_MODE === 'static' && data?.roles.includes(VITE_STATIC_SUPER_ROLE);
+
   function hasAuth(codes: string | string[]) {
-    if (!isLogin) {
+    if (!isLogin || !data) {
       return false;
     }
 
     if (typeof codes === 'string') {
-      return userInfo.buttons.includes(codes);
+      return data.buttons.includes(codes);
     }
 
-    return codes.some(code => userInfo.buttons.includes(code));
+    return codes.some(code => data.buttons.includes(code));
   }
 
   return {
-    hasAuth
+    hasAuth,
+    isStaticSuper
   };
 }
 
@@ -37,6 +42,10 @@ export function useInitAuth() {
   const { endLoading, loading, startLoading } = useLoading();
 
   const [searchParams] = useSearchParams();
+
+  const { mutate: login } = useLogin();
+
+  const { refetch: refetchUserInfo } = useUserInfo();
 
   const { t } = useTranslation();
 
@@ -46,41 +55,45 @@ export function useInitAuth() {
 
   const redirectUrl = searchParams.get('redirect');
 
-  async function toLogin({ password, userName }: { password: string; userName: string }, redirect = true) {
+  async function toLogin({ password, userName }: Api.Auth.LoginParams, redirect = true) {
     if (loading) return;
 
     startLoading();
-    const { data: loginToken, error } = await fetchLogin(userName, password);
 
-    if (!error) {
-      localStg.set('token', loginToken.token);
-      localStg.set('refreshToken', loginToken.refreshToken);
+    login(
+      { password, userName },
+      {
+        onSettled: () => {
+          endLoading();
+        },
+        onSuccess: async data => {
+          localStg.set('token', data.token);
 
-      const { data: info, error: userInfoError } = await fetchGetUserInfo();
+          localStg.set('refreshToken', data.refreshToken);
 
-      if (!userInfoError) {
-        // 2. store user info
-        localStg.set('userInfo', info);
+          const { data: info, error } = await refetchUserInfo();
 
-        dispatch(setToken(loginToken.token));
-        dispatch(setUserInfo(info));
+          if (!error && info) {
+            localStg.set('userInfo', info);
 
-        if (redirect) {
-          if (redirectUrl) {
-            replace(redirectUrl);
-          } else {
-            replace(globalConfig.homePath);
+            dispatch(setToken(data.token));
+
+            if (redirect) {
+              if (redirectUrl) {
+                replace(redirectUrl);
+              } else {
+                replace(globalConfig.homePath);
+              }
+            }
+
+            window.$notification?.success({
+              description: t('page.login.common.welcomeBack', { userName: info.userName }),
+              message: t('page.login.common.loginSuccess')
+            });
           }
         }
-
-        window.$notification?.success({
-          description: t('page.login.common.welcomeBack', { userName: info.userName }),
-          message: t('page.login.common.loginSuccess')
-        });
       }
-    }
-
-    endLoading();
+    );
   }
 
   return {

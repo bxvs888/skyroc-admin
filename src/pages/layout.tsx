@@ -2,9 +2,9 @@ import type { RoutePath } from '@soybean-react/vite-plugin-react-router';
 import { Outlet, matchRoutes } from 'react-router-dom';
 import type { ShouldRevalidateFunctionArgs } from 'react-router-dom';
 
-import { isStaticSuper, selectUserInfo } from '@/features/auth/authStore';
 import { usePrevious, useRoute } from '@/features/router';
 import { allRoutes } from '@/router';
+import { useUserInfo } from '@/service/hooks';
 import { localStg } from '@/utils/storage';
 
 function handleRouteSwitch(to: Router.Route, from: Router.Route | null) {
@@ -87,9 +87,11 @@ const RootLayout = () => {
 
   const { i18nKey, title } = handle;
 
-  const { roles } = useAppSelector(selectUserInfo);
+  const { data: userInfo } = useUserInfo();
 
-  const isSuper = useAppSelector(isStaticSuper);
+  const roles = userInfo?.roles || [];
+
+  const isSuper = userInfo?.roles.includes(import.meta.env.VITE_STATIC_SUPER_ROLE);
 
   const { t } = useTranslation();
 
@@ -104,7 +106,7 @@ const RootLayout = () => {
   if (routeId.current !== id) {
     routeId.current = id;
 
-    location.current = createRouteGuard(route, roles, isSuper, previousRoute);
+    location.current = createRouteGuard(route, roles, isSuper || false, previousRoute);
   }
 
   // eslint-disable-next-line no-nested-ternary

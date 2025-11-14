@@ -1,14 +1,15 @@
 import type { MenuProps } from 'antd';
 
-import { selectToken, selectUserInfo } from '@/features/auth/authStore';
+import { selectToken } from '@/features/auth/authStore';
 import { useRouter } from '@/features/router';
+import { useUserInfo } from '@/service/hooks';
 
 const UserAvatar = memo(() => {
   const token = useAppSelector(selectToken);
 
-  const { t } = useTranslation();
+  const { data: userInfo } = useUserInfo();
 
-  const userInfo = useAppSelector(selectUserInfo);
+  const { t } = useTranslation();
 
   const { navigate } = useRouter();
 
@@ -78,7 +79,7 @@ const UserAvatar = memo(() => {
             className="text-icon-large"
             icon="ph:user-circle"
           />
-          <span className="text-16px font-medium">{userInfo.userName}</span>
+          <span className="text-16px font-medium">{userInfo?.userName}</span>
         </ButtonIcon>
       </div>
     </ADropdown>

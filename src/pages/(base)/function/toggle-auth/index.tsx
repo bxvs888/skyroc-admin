@@ -3,10 +3,10 @@ import type { DescriptionsProps } from 'antd';
 
 import { useAuth } from '@/features/auth';
 import { useInitAuth } from '@/features/auth/auth';
-import { selectUserInfo } from '@/features/auth/authStore';
 import { useRouter } from '@/features/router';
 import { initTab, useUpdateTabs } from '@/features/tab/tabHooks';
 import { useThemeSettings } from '@/features/theme';
+import { useUserInfo } from '@/service/hooks';
 
 type AccountKey = 'admin' | 'super' | 'user';
 
@@ -20,8 +20,10 @@ interface Account {
 const ToggleAuth = () => {
   const { t } = useTranslation();
 
-  const userInfo = useAppSelector(selectUserInfo);
+  const { data: userInfo } = useUserInfo();
+
   const updateTabs = useUpdateTabs();
+
   const { hasAuth } = useAuth();
 
   const { toLogin } = useInitAuth();
@@ -55,13 +57,7 @@ const ToggleAuth = () => {
 
   const roles: DescriptionsProps['items'] = [
     {
-      children: (
-        <ASpace>
-          {userInfo.roles.map(role => (
-            <ATag key={role}>{role}</ATag>
-          ))}
-        </ASpace>
-      ),
+      children: <ASpace>{userInfo?.roles.map(role => <ATag key={role}>{role}</ATag>)}</ASpace>,
       key: '1',
       label: t('page.manage.user.userRole')
     },
