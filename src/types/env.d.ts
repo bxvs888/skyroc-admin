@@ -5,7 +5,7 @@
  */
 declare namespace Env {
   /** The router history mode */
-  type RouterHistoryMode = 'hash' | 'history' | 'memory';
+  type RouterHistoryMode = 'hash' | 'history';
 
   /** Interface for import.meta */
   interface ImportMeta extends ImportMetaEnv {

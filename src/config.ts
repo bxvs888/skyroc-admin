@@ -81,6 +81,9 @@ class GlobalConfig {
   /** - 是否PC */
   private _isPC = isPC();
 
+  /** - 路由模式 */
+  private _routerMode: Env.RouterHistoryMode = 'history';
+
   /** - 默认暗色模式 */
   get defaultDarkMode() {
     return this._defaultDarkMode;
@@ -159,6 +162,11 @@ class GlobalConfig {
   /** - 服务其他基础URL */
   get serviceOtherBaseURL() {
     return this._serviceOtherBaseURL;
+  }
+
+  /** - 路由模式 */
+  get routerMode() {
+    return this._routerMode;
   }
 }
 

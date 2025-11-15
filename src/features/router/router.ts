@@ -1,5 +1,5 @@
 import type { RouterNavigateOptions, To } from 'react-router-dom';
-import { createBrowserRouter, matchRoutes } from 'react-router-dom';
+import { createBrowserRouter, createHashRouter, matchRoutes } from 'react-router-dom';
 
 import { globalConfig } from '@/config';
 import { initCacheRoutes, routes } from '@/router';
@@ -10,6 +10,17 @@ import { getIsLogin } from '../auth/authStore';
 import { initAuthRoutes } from './initRouter';
 import { type LocationQueryRaw, stringifyQuery } from './query';
 import { setCacheRoutes } from './routeStore';
+
+/**
+ * 根据配置创建路由实例
+ *
+ * 支持 history 和 hash 两种模式，由 globalConfig.routerMode 控制
+ */
+function createRouterInstance() {
+  const routerCreator = globalConfig.routerMode === 'hash' ? createHashRouter : createBrowserRouter;
+
+  return routerCreator;
+}
 
 function initRouter() {
   let isAlreadyPatch = false;
@@ -30,7 +41,9 @@ function initRouter() {
     return false;
   }
 
-  const reactRouter = createBrowserRouter(routes, {
+  const routerCreator = createRouterInstance();
+
+  const reactRouter = routerCreator(routes, {
     basename: import.meta.env.VITE_BASE_URL,
     patchRoutesOnNavigation: async ({ patch, path }) => {
       if (getIsNeedPatch(path)) {
