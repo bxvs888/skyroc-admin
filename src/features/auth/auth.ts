@@ -6,7 +6,9 @@ import { usePreviousRoute, useRouter } from '@/features/router';
 import { useLogin, useUserInfo } from '@/service/hooks';
 import { localStg } from '@/utils/storage';
 
+import { resetRouteStore } from '../router/routeStore';
 import { useCacheTabs } from '../tab/tabHooks';
+import { clearTabs } from '../tab/tabStore';
 
 import { resetAuth as resetAuthAction, setToken } from './authStore';
 import { clearAuthStorage } from './shared';
@@ -69,11 +71,17 @@ export function useInitAuth() {
         const { data: info, error } = await refetchUserInfo();
 
         if (!error && info) {
+          const previousUserId = localStg.get('previousUserId');
+
           localStg.set('userInfo', info);
 
           dispatch(setToken(data.token));
 
-          if (redirect) {
+          if (previousUserId !== info.userId || !previousUserId) {
+            localStg.remove('globalTabs');
+
+            replace(globalConfig.homePath);
+          } else if (redirect) {
             if (redirectUrl) {
               replace(redirectUrl);
             } else {
@@ -103,6 +111,8 @@ export function useResetAuth() {
 
   const previousRoute = usePreviousRoute();
 
+  const { data: userInfo } = useUserInfo();
+
   const cacheTabs = useCacheTabs();
 
   const { navigate, push, resetRoutes } = useRouter();
@@ -111,6 +121,12 @@ export function useResetAuth() {
     clearAuthStorage();
 
     dispatch(resetAuthAction());
+
+    dispatch(clearTabs());
+
+    dispatch(resetRouteStore());
+
+    localStg.set('previousUserId', userInfo?.userId || '');
 
     resetRoutes();
 

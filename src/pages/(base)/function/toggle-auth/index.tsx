@@ -4,8 +4,6 @@ import type { DescriptionsProps } from 'antd';
 import { useAuth } from '@/features/auth';
 import { useInitAuth } from '@/features/auth/auth';
 import { useRouter } from '@/features/router';
-import { initTab, useUpdateTabs } from '@/features/tab/tabHooks';
-import { useThemeSettings } from '@/features/theme';
 import { useUserInfo } from '@/service/hooks';
 
 type AccountKey = 'admin' | 'super' | 'user';
@@ -22,14 +20,12 @@ const ToggleAuth = () => {
 
   const { data: userInfo } = useUserInfo();
 
-  const updateTabs = useUpdateTabs();
-
   const { hasAuth } = useAuth();
 
   const { toLogin } = useInitAuth();
 
   const { loading, startLoading } = useLoading();
-  const themeSettings = useThemeSettings();
+
   const { reload, resetRoutes } = useRouter();
 
   const [loginAccount, setLoginAccount] = useState<AccountKey>('super');
@@ -89,8 +85,6 @@ const ToggleAuth = () => {
     resetRoutes();
 
     await toLogin({ password: account.password, userName: account.userName }, false);
-
-    initTab(themeSettings.tab.cache, updateTabs);
 
     reload();
   }

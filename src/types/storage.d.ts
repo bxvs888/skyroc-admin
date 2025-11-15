@@ -29,6 +29,8 @@ declare namespace StorageType {
      * The value is the build time of the project
      */
     overrideThemeFlag: string;
+    /** The previous user id */
+    previousUserId: string | number;
     /** The refresh token */
     refreshToken: string;
     /** The theme color */
