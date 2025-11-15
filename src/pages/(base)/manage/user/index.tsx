@@ -23,126 +23,126 @@ const UserManage = () => {
 
   const isMobile = useMobile();
 
-  const { columnChecks, data, run, searchProps, setColumnChecks, tableProps } = useTable(
-    {
-      apiFn: fetchGetUserList,
-      apiParams: {
-        current: 1,
-        nickName: null,
-        size: 10,
-        // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
-        // the value can not be undefined, otherwise the property in Form will not be reactive
-        status: null,
-        userEmail: null,
-        userGender: null,
-        userName: null,
-        userPhone: null
-      },
-      columns: () => [
-        {
-          align: 'center',
-          dataIndex: 'index',
-          key: 'index',
-          title: t('common.index'),
-          width: 64
-        },
-        {
-          align: 'center',
-          dataIndex: 'userName',
-          key: 'userName',
-          minWidth: 100,
-          title: t('page.manage.user.userName')
-        },
-        {
-          align: 'center',
-          dataIndex: 'userGender',
-          key: 'userGender',
-          render: (_, record) => {
-            if (record?.userGender === null) {
-              return null;
-            }
-
-            const label = t(userGenderRecord[record.userGender]);
-
-            return <ATag color={tagUserGenderMap[record.userGender]}>{label}</ATag>;
-          },
-          title: t('page.manage.user.userGender'),
-          width: 100
-        },
-        {
-          align: 'center',
-          dataIndex: 'nickName',
-          key: 'nickName',
-          minWidth: 100,
-          title: t('page.manage.user.nickName')
-        },
-        {
-          align: 'center',
-          dataIndex: 'userPhone',
-          key: 'userPhone',
-          title: t('page.manage.user.userPhone'),
-          width: 120
-        },
-        {
-          align: 'center',
-          dataIndex: 'userEmail',
-          key: 'userEmail',
-          minWidth: 200,
-          title: t('page.manage.user.userEmail')
-        },
-        {
-          align: 'center',
-          dataIndex: 'status',
-          key: 'status',
-          render: (_, record) => {
-            if (record.status === null) {
-              return null;
-            }
-            const label = t(enableStatusRecord[record.status]);
-            return <ATag color={ATG_MAP[record.status]}>{label}</ATag>;
-          },
-          title: t('page.manage.user.userStatus'),
-          width: 100
-        },
-        {
-          align: 'center',
-          key: 'operate',
-          render: (_, record) => (
-            <div className="flex-center gap-8px">
-              <AButton
-                ghost
-                size="small"
-                type="primary"
-                onClick={() => edit(record.id)}
-              >
-                {t('common.edit')}
-              </AButton>
-              <AButton
-                size="small"
-                onClick={() => nav(`/manage/user/${record.id}`)}
-              >
-                详情
-              </AButton>
-              <APopconfirm
-                title={t('common.confirmDelete')}
-                onConfirm={() => handleDelete(record.id)}
-              >
-                <AButton
-                  danger
-                  size="small"
-                >
-                  {t('common.delete')}
-                </AButton>
-              </APopconfirm>
-            </div>
-          ),
-          title: t('common.operate'),
-          width: 195
-        }
-      ]
+  const { columnChecks, data, run, searchProps, setColumnChecks, tableProps } = useTable({
+    apiFn: fetchGetUserList,
+    apiParams: {
+      current: 1,
+      nickName: null,
+      size: 10,
+      // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
+      // the value can not be undefined, otherwise the property in Form will not be reactive
+      status: null,
+      userEmail: null,
+      userGender: null,
+      userName: null,
+      userPhone: null
     },
-    { showQuickJumper: true }
-  );
+    columns: () => [
+      {
+        align: 'center',
+        dataIndex: 'index',
+        key: 'index',
+        title: t('common.index'),
+        width: 64
+      },
+      {
+        align: 'center',
+        dataIndex: 'userName',
+        key: 'userName',
+        minWidth: 100,
+        title: t('page.manage.user.userName')
+      },
+      {
+        align: 'center',
+        dataIndex: 'userGender',
+        key: 'userGender',
+        render: (_, record) => {
+          if (record?.userGender === null) {
+            return null;
+          }
+
+          const label = t(userGenderRecord[record.userGender]);
+
+          return <ATag color={tagUserGenderMap[record.userGender]}>{label}</ATag>;
+        },
+        title: t('page.manage.user.userGender'),
+        width: 100
+      },
+      {
+        align: 'center',
+        dataIndex: 'nickName',
+        key: 'nickName',
+        minWidth: 100,
+        title: t('page.manage.user.nickName')
+      },
+      {
+        align: 'center',
+        dataIndex: 'userPhone',
+        key: 'userPhone',
+        title: t('page.manage.user.userPhone'),
+        width: 120
+      },
+      {
+        align: 'center',
+        dataIndex: 'userEmail',
+        key: 'userEmail',
+        minWidth: 200,
+        title: t('page.manage.user.userEmail')
+      },
+      {
+        align: 'center',
+        dataIndex: 'status',
+        key: 'status',
+        render: (_, record) => {
+          if (record.status === null) {
+            return null;
+          }
+          const label = t(enableStatusRecord[record.status]);
+          return <ATag color={ATG_MAP[record.status]}>{label}</ATag>;
+        },
+        title: t('page.manage.user.userStatus'),
+        width: 100
+      },
+      {
+        align: 'center',
+        key: 'operate',
+        render: (_, record) => (
+          <div className="flex-center gap-8px">
+            <AButton
+              ghost
+              size="small"
+              type="primary"
+              onClick={() => edit(record.id)}
+            >
+              {t('common.edit')}
+            </AButton>
+            <AButton
+              size="small"
+              onClick={() => nav(`/manage/user/${record.id}`)}
+            >
+              详情
+            </AButton>
+            <APopconfirm
+              title={t('common.confirmDelete')}
+              onConfirm={() => handleDelete(record.id)}
+            >
+              <AButton
+                danger
+                size="small"
+              >
+                {t('common.delete')}
+              </AButton>
+            </APopconfirm>
+          </div>
+        ),
+        title: t('common.operate'),
+        width: 195
+      }
+    ],
+    pagination: {
+      showQuickJumper: true
+    }
+  });
 
   const { checkedRowKeys, generalPopupOperation, handleAdd, handleEdit, onBatchDeleted, onDeleted, rowSelection } =
     useTableOperate(data, run, async (res, type) => {

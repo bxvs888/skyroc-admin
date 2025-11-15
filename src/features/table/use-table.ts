@@ -7,18 +7,32 @@ import { getIsMobile } from '@/layouts/appStore';
 
 type TableData = AntDesign.TableData;
 type GetTableData<A extends AntDesign.TableApiFn> = AntDesign.GetTableData<A>;
+
 type TableColumn<T> = AntDesign.TableColumn<T>;
-type Config<A extends AntDesign.TableApiFn> = AntDesign.AntDesignTableConfig<A> & {
-  isChangeURL?: boolean;
+
+type Config<A extends AntDesign.TableApiFn> = AntDesign.AntDesignTableConfig<A>;
+
+type CustomTableProps<A extends AntDesign.TableApiFn> = Omit<
+  TableProps<AntDesign.TableDataWithIndex<GetTableData<A>>>,
+  'loading'
+> & {
+  loading: boolean;
 };
 
-export function useTable<A extends AntDesign.TableApiFn>(
-  config: Config<A>,
-  paginationConfig?: Omit<TablePaginationConfig, 'current' | 'onChange' | 'pageSize' | 'total'>
-) {
+export function useTable<A extends AntDesign.TableApiFn>(config: Config<A>) {
   const isMobile = useAppSelector(getIsMobile);
 
-  const { apiFn, apiParams, immediate, isChangeURL = true, rowKey = 'id' } = config;
+  const {
+    apiFn,
+    apiParams,
+    columns: columnsFactory,
+    immediate,
+    isChangeURL = true,
+    onChange: onChangeCallback,
+    pagination: paginationConfig,
+    rowKey = 'id',
+    ...rest
+  } = config;
 
   const [form] = Form.useForm<AntDesign.AntDesignTableConfig<A>['apiParams']>();
 
@@ -42,7 +56,7 @@ export function useTable<A extends AntDesign.TableApiFn>(
   } = useHookTable<A, GetTableData<A>, TableColumn<AntDesign.TableDataWithIndex<GetTableData<A>>>>({
     apiFn,
     apiParams: { ...apiParams, ...query },
-    columns: config.columns,
+    columns: columnsFactory,
     getColumnChecks: cols => {
       const checks: AntDesign.TableColumnCheck[] = [];
 
@@ -95,12 +109,6 @@ export function useTable<A extends AntDesign.TableApiFn>(
   // this is for mobile, if the system does not support mobile, you can use `pagination` directly
   const pagination: TablePaginationConfig = {
     current: pageNum,
-    onChange: async (current: number, size: number) => {
-      updateSearchParams({
-        current,
-        size
-      });
-    },
     pageSize,
     pageSizeOptions: ['10', '15', '20', '25', '30'],
     showSizeChanger: true,
@@ -119,12 +127,19 @@ export function useTable<A extends AntDesign.TableApiFn>(
 
     if (res) {
       if (isResetCurrent) {
-        const { current = 1, ...rest } = res;
-        updateSearchParams({ current, ...rest });
+        const { current = 1, ...other } = res;
+        updateSearchParams({ current, ...other });
       } else {
         updateSearchParams(res);
       }
     }
+  }
+
+  function handleChange(paginationContext: TablePaginationConfig) {
+    updateSearchParams({
+      current: paginationContext.current,
+      size: paginationContext.pageSize
+    });
   }
 
   return {
@@ -144,9 +159,11 @@ export function useTable<A extends AntDesign.TableApiFn>(
       columns,
       dataSource: data,
       loading,
+      onChange: onChangeCallback ?? handleChange,
       pagination,
-      rowKey
-    }
+      rowKey,
+      ...rest
+    } as CustomTableProps<A>
   };
 }
 

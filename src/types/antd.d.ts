@@ -3,6 +3,7 @@ declare namespace AntDesign {
   type TableColumnGroupType<T> = import('antd').TableColumnGroupType<T>;
   type TablePaginationConfig = import('antd').TablePaginationConfig;
   type TableColumnCheck = import('@sa/hooks').TableColumnCheck;
+  type TableProps = import('antd').TableProps;
   type TableDataWithIndex<T> = import('@sa/hooks').TableDataWithIndex<T>;
   type FlatResponseData<T> = import('@sa/axios').FlatResponseData<T>;
 
@@ -35,6 +36,8 @@ declare namespace AntDesign {
 
   type AntDesignTableConfig<A extends TableApiFn> = Pick<
     import('@sa/hooks').TableConfig<A, GetTableData<A>, TableColumn<TableDataWithIndex<GetTableData<A>>>>,
-    'apiFn' | 'apiParams' | 'columns' | 'immediate'
-  > & { rowKey?: keyof GetTableData<A> };
+    'apiFn' | 'apiParams' | 'columns' | 'immediate' | 'isChangeURL'
+  > & {
+    rowKey?: keyof GetTableData<A> | ((record: GetTableData<A>) => string | number);
+  } & Omit<TableProps, 'columns' | 'dataSource' | 'loading' | 'rowKey'>;
 }
