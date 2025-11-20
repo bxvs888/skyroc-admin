@@ -39,7 +39,12 @@ export async function initAuthRoutes(addRoutes: (parent: string | null, route: R
   } else {
     // 动态模式
     try {
-      const data = await fetchGetUserRoutes();
+      const data = await queryClient.ensureQueryData<Api.Route.UserRoute>({
+        gcTime: Infinity,
+        queryFn: fetchGetUserRoutes,
+        queryKey: QUERY_KEYS.ROUTE.USER_ROUTES,
+        staleTime: Infinity
+      });
 
       store.dispatch(setHomePath(data.home));
 

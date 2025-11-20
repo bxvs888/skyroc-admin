@@ -23,9 +23,11 @@ function handleRouteSwitch(to: Router.Route, from: Router.Route | null) {
 // eslint-disable-next-line max-params
 function createRouteGuard(to: Router.Route, roles: string[], isSuper: boolean, previousRoute: Router.Route | null) {
   const loginRoute: RoutePath = '/login';
+
   const isLogin = Boolean(localStg.get('token'));
 
   const notFoundRoute = 'notFound';
+
   const isNotFoundRoute = to.id === notFoundRoute;
 
   if (!isLogin) {
@@ -135,8 +137,10 @@ export async function loader() {
 
   if (hasToken) {
     await queryClient.prefetchQuery({
+      gcTime: Infinity,
       queryFn: fetchGetUserInfo,
-      queryKey: QUERY_KEYS.AUTH.USER_INFO
+      queryKey: QUERY_KEYS.AUTH.USER_INFO,
+      staleTime: Infinity
     });
   }
 }

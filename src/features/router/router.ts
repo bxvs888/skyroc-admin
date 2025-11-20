@@ -58,8 +58,6 @@ function initRouter() {
 
   if (getIsLogin(store.getState()) && !isAlreadyPatch) {
     initAuthRoutes(reactRouter.patchRoutes);
-
-    isAlreadyPatch = true;
   }
 
   function resetRoutes() {

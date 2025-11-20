@@ -19,8 +19,6 @@ export function useLogin() {
   });
 }
 
-const hasToken = Boolean(localStg.get('token'));
-
 /**
  * Get user info hook
  *
@@ -30,9 +28,11 @@ const hasToken = Boolean(localStg.get('token'));
  * @param enabled - Whether to enable the query (default: true)
  */
 export function useUserInfo() {
+  const hasToken = Boolean(localStg.get('token'));
+
   return useQuery({
     enabled: hasToken,
-    gcTime: 30 * 60 * 1000,
+    gcTime: Infinity,
     placeholderData: () => ({
       buttons: [],
       roles: [],
@@ -41,9 +41,8 @@ export function useUserInfo() {
     }),
     queryFn: fetchGetUserInfo,
     queryKey: QUERY_KEYS.AUTH.USER_INFO,
-    refetchOnWindowFocus: true,
     retry: false,
-    staleTime: 2 * 60 * 1000
+    staleTime: Infinity
   });
 }
 
