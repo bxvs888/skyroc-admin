@@ -4,6 +4,7 @@ import { globalConfig } from '@/config';
 import { getIsLogin } from '@/features/auth/authStore';
 import { usePreviousRoute, useRouter } from '@/features/router';
 import { useLogin, useUserInfo } from '@/service/hooks';
+import { queryClient } from '@/service/queryClient';
 import { localStg } from '@/utils/storage';
 
 import { resetRouteStore } from '../router/routeStore';
@@ -131,6 +132,8 @@ export function useResetAuth() {
     resetRoutes();
 
     cacheTabs();
+
+    queryClient.clear();
 
     if (!previousRoute?.handle?.constant) {
       if (previousRoute?.fullPath) {
