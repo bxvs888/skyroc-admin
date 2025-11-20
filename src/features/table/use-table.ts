@@ -31,6 +31,7 @@ export function useTable<A extends AntDesign.TableApiFn>(config: Config<A>) {
     onChange: onChangeCallback,
     pagination: paginationConfig,
     rowKey = 'id',
+    transformParams,
     ...rest
   } = config;
 
@@ -103,7 +104,8 @@ export function useTable<A extends AntDesign.TableApiFn>(config: Config<A>) {
         pageSize: size,
         total: totalNum
       };
-    }
+    },
+    transformParams
   });
 
   // this is for mobile, if the system does not support mobile, you can use `pagination` directly
@@ -149,6 +151,7 @@ export function useTable<A extends AntDesign.TableApiFn>(config: Config<A>) {
         other = params;
       }
     }
+
     updateSearchParams(other);
   }
 

@@ -61,10 +61,26 @@ export type TableConfig<A extends ApiFn, T, C> = {
   onFetched?: (transformed: TransformedData<T>) => MaybePromise<void>;
   /** transform api response to table data */
   transformer: Transformer<T, Awaited<ReturnType<A>>>;
+  /**
+   * transform params before sending to backend
+   *
+   * @param params formatted params
+   * @returns transformed params
+   */
+  transformParams?: (params: Parameters<A>[0]) => Parameters<A>[0];
 };
 
 export default function useHookTable<A extends ApiFn, T, C>(config: TableConfig<A, T, C>) {
-  const { apiFn, apiParams, getColumnChecks, getColumns, immediate = true, isChangeURL, transformer } = config;
+  const {
+    apiFn,
+    apiParams,
+    getColumnChecks,
+    getColumns,
+    immediate = true,
+    isChangeURL,
+    transformer,
+    transformParams
+  } = config;
 
   const { endLoading, loading, startLoading } = useLoading();
 
@@ -91,7 +107,11 @@ export default function useHookTable<A extends ApiFn, T, C>(config: TableConfig<
     startLoading();
 
     try {
-      const formattedParams = formatSearchParams(searchParams.current);
+      let formattedParams = formatSearchParams(searchParams.current);
+
+      if (transformParams) {
+        formattedParams = transformParams(formattedParams);
+      }
 
       if (isChangeURL) {
         setSearchParams(formattedParams as URLSearchParamsInit, { replace: true });

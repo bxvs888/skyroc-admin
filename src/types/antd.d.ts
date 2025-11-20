@@ -38,7 +38,7 @@ declare namespace AntDesign {
 
   type AntDesignTableConfig<A extends TableApiFn> = Pick<
     import('@sa/hooks').TableConfig<A, GetTableData<A>, TableColumn<TableDataWithIndex<GetTableData<A>>>>,
-    'apiFn' | 'apiParams' | 'columns' | 'immediate' | 'isChangeURL'
+    'apiFn' | 'apiParams' | 'columns' | 'immediate' | 'isChangeURL' | 'transformParams'
   > & {
     onChange?: (
       ...args: TableOnChange
