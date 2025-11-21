@@ -1,6 +1,24 @@
 # Changelog
 
 
+## [v2.4.0](https://github.com/Ohh-889/soybean-admin-react/compare/v2.3.0...v2.4.0) (2025-11-21)
+
+### &nbsp;&nbsp;&nbsp;🚀 Features
+
+- **request**: implement logout, refresh token, and error handling functionalities with user interface components &nbsp;-&nbsp; by @SkyRoc1 [<samp>(dd843)</samp>](https://github.com/Ohh-889/soybean-admin-react/commit/dd843b1)
+
+### &nbsp;&nbsp;&nbsp;💅 Refactors
+
+- **router**: simplify route init by integrating backend route fetching and transform logic. close #74 &nbsp;-&nbsp; by @SkyRoc1 in https://github.com/Ohh-889/soybean-admin-react/issues/74 [<samp>(27f6e)</samp>](https://github.com/Ohh-889/soybean-admin-react/commit/27f6e99)
+
+### &nbsp;&nbsp;&nbsp;🏡 Chore
+
+- **env**: change authentication route mode from dynamic to static for improved routing consistency &nbsp;-&nbsp; by @SkyRoc1 [<samp>(70b0c)</samp>](https://github.com/Ohh-889/soybean-admin-react/commit/70b0ccd)
+
+### &nbsp;&nbsp;&nbsp;❤️ Contributors
+
+[![SkyRoc1](https://github.com/SkyRoc1.png?size=48)](https://github.com/SkyRoc1)&nbsp;&nbsp;
+
 ## [v2.3.0](https://github.com/Ohh-889/soybean-admin-react/compare/v2.2.3...v2.3.0) (2025-11-21)
 
 ### &nbsp;&nbsp;&nbsp;💅 Refactors
