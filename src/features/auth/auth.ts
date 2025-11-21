@@ -2,17 +2,19 @@ import { useLoading } from '@sa/hooks';
 
 import { globalConfig } from '@/config';
 import { getIsLogin } from '@/features/auth/authStore';
-import { usePreviousRoute, useRouter } from '@/features/router';
+import { router, useRouter } from '@/features/router';
 import { useLogin, useUserInfo } from '@/service/hooks';
+import { QUERY_KEYS } from '@/service/keys';
 import { queryClient } from '@/service/queryClient';
+import { store } from '@/store';
 import { localStg } from '@/utils/storage';
 
 import { resetRouteStore } from '../router/routeStore';
-import { useCacheTabs } from '../tab/tabHooks';
-import { clearTabs } from '../tab/tabStore';
+import { clearTabs, selectTabs } from '../tab/tabStore';
+import { getThemeSettings } from '../theme/themeSettingsStore';
 
 import { resetAuth as resetAuthAction, setToken } from './authStore';
-import { clearAuthStorage } from './shared';
+import { clearAuthStorage, getUserInfo } from './shared';
 
 const { VITE_AUTH_ROUTE_MODE, VITE_STATIC_SUPER_ROLE } = import.meta.env;
 
@@ -107,42 +109,54 @@ export function useInitAuth() {
   };
 }
 
-export function useResetAuth() {
-  const dispatch = useAppDispatch();
+/**
+ * Reset auth - 重置认证状态（可直接调用的函数版本）
+ *
+ * 清除认证信息、标签页、路由缓存，并跳转到登录页
+ */
+export function resetAuth() {
+  // 清除认证存储
+  clearAuthStorage();
 
-  const previousRoute = usePreviousRoute();
+  // 重置认证状态
+  store.dispatch(resetAuthAction());
 
-  const { data: userInfo } = useUserInfo();
+  // 清除标签页
+  store.dispatch(clearTabs());
 
-  const cacheTabs = useCacheTabs();
+  // 重置路由存储
+  store.dispatch(resetRouteStore());
 
-  const { navigate, push, resetRoutes } = useRouter();
+  // 获取用户信息（从缓存或 localStorage）
+  const userInfo = queryClient.getQueryData<Api.Auth.UserInfo>(QUERY_KEYS.AUTH.USER_INFO) || getUserInfo();
 
-  function resetAuth() {
-    clearAuthStorage();
+  // 保存上一个用户 ID
+  localStg.set('previousUserId', userInfo?.userId || '');
 
-    dispatch(resetAuthAction());
+  // 重置路由
+  router.resetRoutes();
 
-    dispatch(clearTabs());
-
-    dispatch(resetRouteStore());
-
-    localStg.set('previousUserId', userInfo?.userId || '');
-
-    resetRoutes();
-
-    cacheTabs();
-
-    queryClient.clear();
-
-    if (!previousRoute?.handle?.constant) {
-      if (previousRoute?.fullPath) {
-        push('/login', { redirect: previousRoute.fullPath }, null, true);
-      } else {
-        navigate('/login', { replace: true });
-      }
-    }
+  // 缓存标签页（如果启用）
+  const themeSettings = getThemeSettings(store.getState());
+  const tabs = selectTabs(store.getState());
+  if (themeSettings.tab.cache) {
+    localStg.set('globalTabs', tabs);
   }
 
-  return resetAuth;
+  // 清除查询缓存
+  queryClient.clear();
+
+  const location = router.reactRouter.state.location;
+
+  const fullPath = location.pathname + location.search + location.hash;
+  // 获取当前路径
+  const currentPath = location.pathname + location.search;
+  const isLoginPage = currentPath.includes('/login');
+
+  // 如果不是登录页，跳转到登录页并带上 redirect 参数
+  if (!isLoginPage) {
+    router.push('/login', { redirect: fullPath }, null, true);
+  } else {
+    router.replace('/login');
+  }
 }

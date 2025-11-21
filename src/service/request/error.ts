@@ -17,7 +17,9 @@ export async function backEndFail(
   const responseCode = String(response.data.code);
 
   function handleLogout() {
-    router.navigate('/login-out');
+    const location = router.reactRouter.state.location;
+    const fullPath = location.pathname + location.search + location.hash;
+    router.push('/login-out', { redirect: fullPath });
   }
 
   function logoutAndCleanup() {

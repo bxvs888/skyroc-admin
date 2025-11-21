@@ -25,7 +25,9 @@ export async function handleRefreshToken() {
     localStg.set('refreshToken', data.refreshToken);
     return true;
   } catch {
-    router.navigate('/login-out');
+    const location = router.reactRouter.state.location;
+    const fullPath = location.pathname + location.search + location.hash;
+    router.push('/login-out', { redirect: fullPath });
     return false;
   }
 }

@@ -1,7 +1,7 @@
 import type { MenuProps } from 'antd';
 
 import { selectToken } from '@/features/auth/authStore';
-import { useRouter } from '@/features/router';
+import { useRoute, useRouter } from '@/features/router';
 import { useUserInfo } from '@/service/hooks';
 
 const UserAvatar = memo(() => {
@@ -11,7 +11,9 @@ const UserAvatar = memo(() => {
 
   const { t } = useTranslation();
 
-  const { navigate } = useRouter();
+  const { navigate, push } = useRouter();
+
+  const { fullPath } = useRoute();
 
   function logout() {
     window?.$modal?.confirm({
@@ -19,7 +21,7 @@ const UserAvatar = memo(() => {
       content: t('common.logoutConfirm'),
       okText: t('common.confirm'),
       onOk: () => {
-        navigate('/login-out');
+        push('/login-out', { redirect: fullPath });
       },
       title: t('common.tip')
     });
