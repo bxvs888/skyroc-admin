@@ -1,6 +1,17 @@
 # Changelog
 
 
+## [v2.3.0](https://github.com/Ohh-889/soybean-admin-react/compare/v2.2.3...v2.3.0) (2025-11-21)
+
+### &nbsp;&nbsp;&nbsp;💅 Refactors
+
+- **auth**: streamline authentication reset process and enhance routing with redirect capabilities &nbsp;-&nbsp; by @SkyRoc1 [<samp>(a6c13)</samp>](https://github.com/Ohh-889/soybean-admin-react/commit/a6c1371)
+- **router**: update navigation methods to support query parameters for improved routing flexibility &nbsp;-&nbsp; by @SkyRoc1 [<samp>(60760)</samp>](https://github.com/Ohh-889/soybean-admin-react/commit/60760ba)
+
+### &nbsp;&nbsp;&nbsp;❤️ Contributors
+
+[![SkyRoc1](https://github.com/SkyRoc1.png?size=48)](https://github.com/SkyRoc1)&nbsp;&nbsp;
+
 ## [v2.2.3](https://github.com/Ohh-889/soybean-admin-react/compare/v2.2.2...v2.2.3) (2025-11-21)
 
 ### &nbsp;&nbsp;&nbsp;🚀 Features
