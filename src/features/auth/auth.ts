@@ -155,7 +155,7 @@ export function resetAuth() {
 
   // 如果不是登录页，跳转到登录页并带上 redirect 参数
   if (!isLoginPage) {
-    router.push('/login', { redirect: fullPath }, null, true);
+    router.push('/login', { query: { redirect: fullPath }, replace: true });
   } else {
     router.replace('/login');
   }

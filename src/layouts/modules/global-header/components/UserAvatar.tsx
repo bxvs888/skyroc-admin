@@ -21,7 +21,7 @@ const UserAvatar = memo(() => {
       content: t('common.logoutConfirm'),
       okText: t('common.confirm'),
       onOk: () => {
-        push('/login-out', { redirect: fullPath });
+        push('/login-out', { query: { redirect: fullPath } });
       },
       title: t('common.tip')
     });

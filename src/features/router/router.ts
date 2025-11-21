@@ -71,6 +71,21 @@ function initRouter() {
   };
 }
 
+/** 扩展的导航选项，支持 query 参数 */
+type ExtendedNavigateOptions = RouterNavigateOptions & {
+  query?: LocationQueryRaw;
+};
+
+/** 构建带查询参数的路径 */
+function buildPathWithQuery(path: To, query?: LocationQueryRaw): To {
+  if (!query) return path;
+
+  const pathStr = typeof path === 'string' ? path : path.pathname || '';
+  const search = stringifyQuery(query);
+
+  return `${pathStr}?${search}` as To;
+}
+
 function navigator() {
   const { reactRouter, resetRoutes } = initRouter();
 
@@ -90,8 +105,12 @@ function navigator() {
     reactRouter.navigate(delta);
   }
 
-  function replace(path: To) {
-    reactRouter.navigate(path, { replace: true });
+  /** 替换当前历史记录并导航到新路径 支持完整的 RouterNavigateOptions 和 query 参数 */
+  function replace(path: To, options?: ExtendedNavigateOptions) {
+    const { query, ...navigateOptions } = options || {};
+    const finalPath = buildPathWithQuery(path, query);
+
+    reactRouter.navigate(finalPath, { ...navigateOptions, replace: true });
   }
 
   function reload() {
@@ -102,28 +121,87 @@ function navigator() {
     reactRouter.navigate('..');
   }
 
-  function goHome() {
-    reactRouter.navigate(globalConfig.homePath);
+  function goHome(options?: RouterNavigateOptions) {
+    reactRouter.navigate(globalConfig.homePath, options);
   }
 
-  // eslint-disable-next-line max-params
-  function push(path: string, query?: LocationQueryRaw, state?: any, _replace?: boolean) {
-    let _path = path;
+  /**
+   * 推入新的历史记录并导航到新路径 支持完整的 RouterNavigateOptions 和 query 参数
+   *
+   * @example
+   *   // 基础用法
+   *   router.push('/users');
+   *
+   *   // 带查询参数
+   *   router.push('/users', { query: { page: 1, size: 10 } });
+   *
+   *   // 带状态和选项
+   *   router.push('/users', {
+   *     query: { page: 1 },
+   *     state: { from: 'home' },
+   *     preventScrollReset: true
+   *   });
+   *
+   *   // 替换模式（向后兼容）
+   *   router.push('/users', { replace: true });
+   */
+  function push(path: To, options?: ExtendedNavigateOptions) {
+    const { query, ...navigateOptions } = options || {};
+    const finalPath = buildPathWithQuery(path, query);
 
-    if (query) {
-      const search = stringifyQuery(query);
+    reactRouter.navigate(finalPath, navigateOptions);
+  }
 
-      _path = `${path}?${search}`;
-    }
+  /** 导航到指定路径（navigate 的语义化别名） */
+  function goTo(path: To, options?: ExtendedNavigateOptions) {
+    const { query, ...navigateOptions } = options || {};
+    const finalPath = buildPathWithQuery(path, query);
 
-    reactRouter.navigate(_path, { replace: _replace, state });
+    reactRouter.navigate(finalPath, navigateOptions);
+  }
+
+  /** 获取当前位置信息 */
+  function getLocation() {
+    return reactRouter.state.location;
+  }
+
+  /** 获取当前路径名 */
+  function getPathname() {
+    return reactRouter.state.location.pathname;
+  }
+
+  /** 获取当前查询参数 */
+  function getSearch() {
+    return reactRouter.state.location.search;
+  }
+
+  /** 获取当前 hash */
+  function getHash() {
+    return reactRouter.state.location.hash;
+  }
+
+  /** 获取当前状态 */
+  function getState() {
+    return reactRouter.state.location.state;
+  }
+
+  /** 检查是否可以后退（基于浏览器历史记录） */
+  function canGoBack() {
+    return window.history.length > 1;
   }
 
   return {
     back,
+    canGoBack,
     forward,
+    getHash,
+    getLocation,
+    getPathname,
+    getSearch,
+    getState,
     go,
     goHome,
+    goTo,
     navigate,
     navigateUp,
     push,

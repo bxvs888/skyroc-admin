@@ -20,7 +20,7 @@ const Tab = () => {
   }
 
   function goMultiTab(query?: LocationQueryRaw) {
-    push('/function/multi-tab', query);
+    push('/function/multi-tab', { query });
   }
 
   function removeAboutTab() {

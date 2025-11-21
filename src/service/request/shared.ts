@@ -27,7 +27,7 @@ export async function handleRefreshToken() {
   } catch {
     const location = router.reactRouter.state.location;
     const fullPath = location.pathname + location.search + location.hash;
-    router.push('/login-out', { redirect: fullPath });
+    router.push('/login-out', { query: { redirect: fullPath } });
     return false;
   }
 }
