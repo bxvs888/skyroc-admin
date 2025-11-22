@@ -52,7 +52,7 @@ export async function initAuthRoutes(addRoutes: (parent: string | null, route: R
 
       function collectParentInfo(routes: Api.Route.BackendRoute[], parent: string | null = null) {
         routes.forEach(route => {
-          const routeParent = route.parent !== undefined ? route.parent : parent;
+          const routeParent = route.layout !== undefined ? route.layout : parent;
           routeParentMap.set(route.name, routeParent ?? null);
         });
       }

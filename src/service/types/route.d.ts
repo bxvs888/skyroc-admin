@@ -40,8 +40,6 @@ declare namespace Api {
       layout?: string;
       /** 路由唯一标识 */
       name: string;
-      /** 父路由标识 */
-      parent?: string;
       /** 路由 path */
       path: string;
       /** 重定向 */
