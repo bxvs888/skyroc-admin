@@ -37,8 +37,6 @@ declare namespace Router {
      * It can be used in the menu or breadcrumb
      */
     icon?: string;
-    /** Icon size. width and height are the same. */
-    iconFontSize?: number;
     /** Whether to cache the route */
     keepAlive?: boolean;
     /**

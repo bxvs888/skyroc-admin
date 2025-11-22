@@ -16,6 +16,8 @@ declare namespace CommonType {
    */
   type Option<K = string> = { label: string; value: K };
 
+  type OptionWithReactNode<K = string> = { label: React.ReactNode; value: K };
+
   type YesOrNo = 'N' | 'Y';
 
   /** add null to all properties */

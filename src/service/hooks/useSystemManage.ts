@@ -76,7 +76,8 @@ export function useMenuList() {
 export function useAllPages() {
   return useQuery({
     queryFn: fetchGetAllPages,
-    queryKey: QUERY_KEYS.SYSTEM_MANAGE.ALL_PAGES
+    queryKey: QUERY_KEYS.SYSTEM_MANAGE.ALL_PAGES,
+    staleTime: 0
   });
 }
 

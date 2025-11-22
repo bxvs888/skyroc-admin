@@ -92,7 +92,7 @@ declare namespace Api {
 
     /** 菜单的路由属性 */
     type MenuPropsOfRoute = Pick<
-      import('@soybean-react/vite-plugin-react-router').RouteMeta,
+      Router.RouteHandle,
       | 'activeMenu'
       | 'constant'
       | 'fixedIndexInTab'
