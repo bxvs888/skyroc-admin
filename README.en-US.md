@@ -80,7 +80,7 @@ Both branches will continue to receive bug fixes. If you need the older version,
 
 ## Version Information
 
-Current Version: **v2.4.0**
+Current Version: **v2.5.0**
 
 ### Tech Stack Versions
 
